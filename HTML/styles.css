@@ -1,0 +1,19 @@
+.carousel-img {
+    height: 500px;
+    object-fit: cover;
+}
+
+.fixed-card-img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.carousel-inner {
+    max-height: 300px;
+}
