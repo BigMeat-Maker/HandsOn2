@@ -17,3 +17,55 @@
 .carousel-inner {
     max-height: 300px;
 }
+
+.carousel-img {
+    transition: transform 0.5s ease;
+}
+
+.carousel-img.zoomed {
+    transform: scale(1.2);
+}
+
+.modal-content {
+    background-color: #121212;
+    color: white;
+}
+
+.carousel-item {
+    cursor: pointer;
+}
+
+.modal-dialog {
+    max-width: 80%; 
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-header {
+    background-color: #333;
+    color: white;
+}
+
+body {
+    background-color: #fff;
+    color: #000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  iframe {
+    border: 2px solid #ccc;
+    transition: border 0.3s ease;
+  }
+  
+  body.dark-mode {
+    background-color: #121212;
+    color: #fff;
+  }
+  
+  body.dark-mode iframe {
+    border: 2px solid #444;
+  }
+  
+  

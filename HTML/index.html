@@ -10,25 +10,23 @@
 </head>
 
 <body>
-    
     <div id="header"></div>
 
-    
     <div id="habitatCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
+            <div class="carousel-item active" data-bs-toggle="modal" data-bs-target="#habitatModal" data-habitat="Habitat 1">
                 <img src="/Images/savanna.png" class="d-block w-100 carousel-img" alt="Habitat 1">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Explore Habitat 1</h5>
                 </div>
             </div>
-            <div class="carousel-item">
+            <div class="carousel-item" data-bs-toggle="modal" data-bs-target="#habitatModal" data-habitat="Habitat 2">
                 <img src="/Images/rainforest.png" class="d-block w-100 carousel-img" alt="Habitat 2">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Discover Habitat 2</h5>
                 </div>
             </div>
-            <div class="carousel-item">
+            <div class="carousel-item" data-bs-toggle="modal" data-bs-target="#habitatModal" data-habitat="Habitat 3">
                 <img src="/Images/deepocean.png" class="d-block w-100 carousel-img" alt="Habitat 3">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Uncover Habitat 3</h5>
@@ -45,7 +43,20 @@
         </button>
     </div>
 
-    
+    <div class="modal fade" id="habitatModal" tabindex="-1" aria-labelledby="habitatModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="habitatModalLabel">Habitat Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="habitatDescription">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
@@ -81,11 +92,49 @@
         </div>
     </div>
 
-    
     <div id="footer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const carouselItems = document.querySelectorAll('.carousel-item');
+
+            carouselItems.forEach(item => {
+                const image = item.querySelector('.carousel-img');
+                item.addEventListener('click', function () {
+                    image.classList.toggle('zoomed');
+                });
+            });
+
+            const habitatModal = new bootstrap.Modal(document.getElementById('habitatModal'));
+            const habitatDescription = document.getElementById('habitatDescription');
+
+            document.querySelectorAll('.carousel-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const habitat = item.getAttribute('data-habitat');
+                    updateModalContent(habitat);
+                    habitatModal.show();
+                });
+            });
+
+            function updateModalContent(habitat) {
+                let description = '';
+                switch (habitat) {
+                    case 'Habitat 1':
+                        description = 'The Savanna is a biome characterized by grasslands with scattered trees and seasonal rainfall. It is home to iconic wildlife like lions, elephants, and giraffes.';
+                        break;
+                    case 'Habitat 2':
+                        description = 'The Rainforest is a dense, warm, and wet forest found near the equator. It is home to a vast number of species, including exotic birds, monkeys, and reptiles.';
+                        break;
+                    case 'Habitat 3':
+                        description = 'The Deep Ocean is the world’s largest habitat, with mysterious creatures adapted to the harsh, dark environment. It is a place of extreme pressure and cold temperatures.';
+                        break;
+                }
+                habitatDescription.textContent = description;
+            }
+        });
+    </script>
 </body>
 
 </html>
