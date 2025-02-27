@@ -10,9 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             document.getElementById("footer").innerHTML = data;
         });
+
+    applyNewsTypingEffect();
 });
 
-// Habitat Information Data
 const habitatInfo = {
     savanna: {
         title: "The Savanna",
@@ -36,15 +37,11 @@ let soundEffect = new Audio();
 function showHabitatInfo(habitat) {
     document.getElementById("habitatOverlay").style.display = "flex";
 
-    // Play sound effect
     soundEffect.src = habitatInfo[habitat].sound;
     soundEffect.play();
 
-    // Apply scrambling effect to habitat name
     applyTextScramble(habitatInfo[habitat].title);
-
-    // Apply typing effect to description
-    applyTypingEffect(habitatInfo[habitat].text);
+    applyTypingEffect(document.getElementById("habitatText"), habitatInfo[habitat].text);
 }
 
 function closeOverlay() {
@@ -52,10 +49,9 @@ function closeOverlay() {
     soundEffect.pause();
 }
 
-// Scrambling Effect for Habitat Name
 const resolver = {
     resolve: function resolve(options, callback) {
-        const resolveString = options.resolveString || options.element.getAttribute('data-target-resolver');
+        const resolveString = options.resolveString;
         const combinedOptions = Object.assign({}, options, { resolveString: resolveString });
 
         function getRandomInteger(min, max) {
@@ -123,19 +119,37 @@ function applyTextScramble(text) {
     resolver.resolve(options);
 }
 
-// Typing Effect for Description
-function applyTypingEffect(text) {
-    const habitatTextElement = document.getElementById("habitatText");
-    habitatTextElement.innerHTML = "";
+function applyTypingEffect(element, text) {
+    element.innerHTML = "";
     let i = 0;
 
     function typeCharacter() {
         if (i < text.length) {
-            habitatTextElement.innerHTML += text.charAt(i);
+            element.innerHTML += text.charAt(i);
             i++;
-            setTimeout(typeCharacter, 30); 
+            setTimeout(typeCharacter, 25);
         }
     }
 
     typeCharacter();
+}
+
+function applyNewsTypingEffect() {
+    const newsItems = document.querySelectorAll(".list-group-item p");
+
+    newsItems.forEach((item, index) => {
+        const text = item.textContent;
+        item.textContent = "";
+        let i = 0;
+
+        function typeCharacter() {
+            if (i < text.length) {
+                item.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeCharacter, 20);
+            }
+        }
+
+        setTimeout(typeCharacter, index * 500);
+    });
 }
