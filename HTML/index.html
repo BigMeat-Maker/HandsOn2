@@ -10,28 +10,31 @@
 </head>
 
 <body>
-    
+
     <div id="header"></div>
 
-    
+    <!-- Habitat Carousel -->
     <div id="habitatCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/Images/savanna.png" class="d-block w-100 carousel-img" alt="Habitat 1">
+                <img src="/Images/savanna.png" class="d-block w-100 carousel-img" alt="Savanna"
+                    onclick="showHabitatInfo('savanna')">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Explore Habitat 1</h5>
+                    <h5>Explore the Savanna</h5>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/Images/rainforest.png" class="d-block w-100 carousel-img" alt="Habitat 2">
+                <img src="/Images/rainforest.png" class="d-block w-100 carousel-img" alt="Rainforest"
+                    onclick="showHabitatInfo('rainforest')">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Discover Habitat 2</h5>
+                    <h5>Discover the Rainforest</h5>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/Images/deepocean.png" class="d-block w-100 carousel-img" alt="Habitat 3">
+                <img src="/Images/deepocean.png" class="d-block w-100 carousel-img" alt="Deep Sea"
+                    onclick="showHabitatInfo('deepsea')">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Uncover Habitat 3</h5>
+                    <h5>Uncover the Deep Sea</h5>
                 </div>
             </div>
         </div>
@@ -45,35 +48,44 @@
         </button>
     </div>
 
-    
+    <!-- Habitat Info Overlay -->
+    <div id="habitatOverlay" class="overlay" onclick="closeOverlay()">
+        <div class="overlay-content">
+            <h2 id="habitatTitle"></h2>
+            <p id="habitatText"></p>
+            <button class="btn btn-light mt-3" onclick="closeOverlay()">Close</button>
+        </div>
+    </div>
+
+    <!-- Habitat Cards -->
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img src="/Images/savanna.png" class="card-img-top fixed-card-img" alt="Habitat 1">
+                    <img src="/Images/savanna.png" class="card-img-top fixed-card-img" alt="Savanna">
                     <div class="card-body">
-                        <h5 class="card-title">Habitat 1</h5>
-                        <p class="card-text">Learn more about Habitat 1 and its unique wildlife and flora.</p>
+                        <h5 class="card-title">The Savanna</h5>
+                        <p class="card-text">Learn more about The Savanna and its unique wildlife.</p>
                         <a href="habitat1.html" class="btn btn-primary">Explore The Savanna</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <img src="/Images/rainforest.png" class="card-img-top fixed-card-img" alt="Habitat 2">
+                    <img src="/Images/rainforest.png" class="card-img-top fixed-card-img" alt="Rainforest">
                     <div class="card-body">
-                        <h5 class="card-title">Habitat 2</h5>
-                        <p class="card-text">Discover the beauty of Habitat 2 and its diverse ecosystem.</p>
+                        <h5 class="card-title">The Rainforest</h5>
+                        <p class="card-text">Discover the beauty of The Rainforest and its ecosystem.</p>
                         <a href="habitat2.html" class="btn btn-primary">Explore The Rainforest</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <img src="/Images/deepocean.png" class="card-img-top fixed-card-img" alt="Habitat 3">
+                    <img src="/Images/deepocean.png" class="card-img-top fixed-card-img" alt="Deep Sea">
                     <div class="card-body">
-                        <h5 class="card-title">Habitat 3</h5>
-                        <p class="card-text">Uncover the secrets of The Deep Sea and its amazing species.</p>
+                        <h5 class="card-title">The Deep Sea</h5>
+                        <p class="card-text">Uncover the secrets of The Deep Sea and its species.</p>
                         <a href="habitat3.html" class="btn btn-primary">Explore The Deep Sea</a>
                     </div>
                 </div>
@@ -81,11 +93,11 @@
         </div>
     </div>
 
-    
     <div id="footer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+
 </body>
 
 </html>

@@ -3,12 +3,139 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.text())
         .then(data => {
             document.getElementById("header").innerHTML = data;
-        })
+        });
 
     fetch("footer.html")
         .then(response => response.text())
         .then(data => {
             document.getElementById("footer").innerHTML = data;
-        })
-
+        });
 });
+
+// Habitat Information Data
+const habitatInfo = {
+    savanna: {
+        title: "The Savanna",
+        text: "A vast grassland home to lions, elephants, and zebras, where the golden sun meets endless horizons.",
+        sound: "/Sounds/savanna.mp3"
+    },
+    rainforest: {
+        title: "The Rainforest",
+        text: "Lush, dense, and teeming with life, the rainforest shelters some of the planet’s most unique creatures.",
+        sound: "/Sounds/rainforest.mp3"
+    },
+    deepsea: {
+        title: "The Deep Sea",
+        text: "A world of darkness and mystery, the deep sea is home to bioluminescent creatures and undiscovered species.",
+        sound: "/Sounds/deepsea.mp3"
+    }
+};
+
+let soundEffect = new Audio();
+
+function showHabitatInfo(habitat) {
+    document.getElementById("habitatOverlay").style.display = "flex";
+
+    // Play sound effect
+    soundEffect.src = habitatInfo[habitat].sound;
+    soundEffect.play();
+
+    // Apply scrambling effect to habitat name
+    applyTextScramble(habitatInfo[habitat].title);
+
+    // Apply typing effect to description
+    applyTypingEffect(habitatInfo[habitat].text);
+}
+
+function closeOverlay() {
+    document.getElementById("habitatOverlay").style.display = "none";
+    soundEffect.pause();
+}
+
+// Scrambling Effect for Habitat Name
+const resolver = {
+    resolve: function resolve(options, callback) {
+        const resolveString = options.resolveString || options.element.getAttribute('data-target-resolver');
+        const combinedOptions = Object.assign({}, options, { resolveString: resolveString });
+
+        function getRandomInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function randomCharacter(characters) {
+            return characters[getRandomInteger(0, characters.length - 1)];
+        }
+
+        function doRandomiserEffect(options, callback) {
+            const characters = options.characters;
+            const element = options.element;
+            const partialString = options.partialString;
+            let iterations = options.iterations;
+
+            setTimeout(() => {
+                if (iterations >= 0) {
+                    const nextOptions = Object.assign({}, options, { iterations: iterations - 1 });
+
+                    if (iterations === 0) {
+                        element.textContent = partialString;
+                    } else {
+                        element.textContent = partialString.substring(0, partialString.length - 1) + randomCharacter(characters);
+                    }
+
+                    doRandomiserEffect(nextOptions, callback);
+                } else if (typeof callback === "function") {
+                    callback();
+                }
+            }, options.timeout);
+        }
+
+        function doResolverEffect(options, callback) {
+            const resolveString = options.resolveString;
+            const offset = options.offset;
+            const partialString = resolveString.substring(0, offset);
+            const combinedOptions = Object.assign({}, options, { partialString: partialString });
+
+            doRandomiserEffect(combinedOptions, () => {
+                const nextOptions = Object.assign({}, options, { offset: offset + 1 });
+
+                if (offset <= resolveString.length) {
+                    doResolverEffect(nextOptions, callback);
+                } else if (typeof callback === "function") {
+                    callback();
+                }
+            });
+        }
+
+        doResolverEffect(combinedOptions, callback);
+    }
+};
+
+function applyTextScramble(text) {
+    const options = {
+        offset: 0,
+        timeout: 5,
+        iterations: 8,
+        characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=<>?/[]{}",
+        resolveString: text,
+        element: document.getElementById("habitatTitle")
+    };
+
+    resolver.resolve(options);
+}
+
+// Typing Effect for Description
+function applyTypingEffect(text) {
+    const habitatTextElement = document.getElementById("habitatText");
+    habitatTextElement.innerHTML = "";
+    let i = 0;
+
+    function typeCharacter() {
+        if (i < text.length) {
+            habitatTextElement.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeCharacter, 30); 
+        }
+    }
+
+    typeCharacter();
+}
