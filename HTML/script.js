@@ -12,6 +12,42 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     applyNewsTypingEffect();
+
+    document.querySelectorAll(".wiki-link").forEach(item => {
+        item.addEventListener("click", function () {
+            const animalName = this.getAttribute("data-animal");
+            const wikiApiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${animalName}`;
+
+            fetch(wikiApiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.content_urls) {
+                        window.open(data.content_urls.desktop.page, "_blank"); // Open Wikipedia page
+                    } else {
+                        alert("Wikipedia page not found!");
+                    }
+                })
+                .catch(error => console.error("Error fetching Wikipedia data:", error));
+        });
+    });
+
+    const lat = -2.163106;
+    const lon = -55.126648;
+    const nasaApiKey = "Ve303Fqh8SUGwsku3ec94DuZWQlyDs0yGPiM7Z6x"; 
+    const earthImgUrl = `https://api.nasa.gov/planetary/earth/imagery?lon=${lon}&lat=${lat}&dim=0.5&date=2024-01-01&cloud_score=true&api_key=Ve303Fqh8SUGwsku3ec94DuZWQlyDs0yGPiM7Z6x`;
+
+
+    fetch(earthImgUrl)
+        .then(response => response.blob())
+        .then(blob => {
+            document.getElementById("nasaSatelliteImage").src = URL.createObjectURL(blob);
+        })
+        .catch(error => console.error("Error fetching NASA Earth image:", error));
+
+});
+
+window.addEventListener("load", (event) => {
+    new cursoreffects.bubbleCursor();
 });
 
 const habitatInfo = {
